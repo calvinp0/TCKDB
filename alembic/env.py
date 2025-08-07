@@ -1,4 +1,4 @@
-# /code/tckdb/backend/app/alembic/env.py
+# /code/alembic/env.py
 from tckdb.backend.app.db.base_class import Base
 from tckdb.backend.app.models.common import MsgpackExt
 
