@@ -29,6 +29,7 @@ services:
 
   app:
     build: .
+    user: "${UID:-1000}:${GID:-1000}"
     platform: linux/amd64 # Forces the use of amd64 architecture
     container_name: tckdb_app
     environment:
