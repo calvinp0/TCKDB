@@ -64,3 +64,59 @@ np_species_reviewers = Table(
     ),
     Column("reviewer_id", Integer, ForeignKey("person.id"), primary_key=True),
 )
+
+transition_state_authors = Table(
+    "transition_state_authors",
+    Base.metadata,
+    Column(
+        "transition_state_id",
+        Integer,
+        ForeignKey("transition_state.id"),
+        primary_key=True,
+    ),
+    Column("author_id", Integer, ForeignKey("person.id"), primary_key=True),
+)
+
+transition_state_reviewers = Table(
+    "transition_state_reviewers",
+    Base.metadata,
+    Column(
+        "transition_state_id",
+        Integer,
+        ForeignKey("transition_state.id"),
+        primary_key=True,
+    ),
+    Column("reviewer_id", Integer, ForeignKey("person.id"), primary_key=True),
+)
+
+reaction_authors = Table(
+    "reaction_authors",
+    Base.metadata,
+    Column("reaction_id", Integer, ForeignKey("reaction.id"), primary_key=True),
+    Column("author_id", Integer, ForeignKey("person.id"), primary_key=True),
+)
+
+reaction_reviewers = Table(
+    "reaction_reviewers",
+    Base.metadata,
+    Column("reaction_id", Integer, ForeignKey("reaction.id"), primary_key=True),
+    Column("reviewer_id", Integer, ForeignKey("person.id"), primary_key=True),
+)
+
+reaction_entry_authors = Table(
+    "reaction_entry_authors",
+    Base.metadata,
+    Column(
+        "reaction_entry_id", Integer, ForeignKey("reaction_entry.id"), primary_key=True
+    ),
+    Column("author_id", Integer, ForeignKey("person.id"), primary_key=True),
+)
+
+reaction_entry_reviewers = Table(
+    "reaction_entry_reviewers",
+    Base.metadata,
+    Column(
+        "reaction_entry_id", Integer, ForeignKey("reaction_entry.id"), primary_key=True
+    ),
+    Column("reviewer_id", Integer, ForeignKey("person.id"), primary_key=True),
+)

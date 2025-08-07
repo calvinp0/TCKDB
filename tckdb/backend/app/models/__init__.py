@@ -19,9 +19,9 @@ from tckdb.backend.app.models.VDW import VDW, VDWEntry
 from tckdb.backend.app.models.reaction import (
     Reaction,
     ReactionEntry,
-    ReactionProduct,
-    ReactionReactant,
+    ReactionParticipant,
 )
+from tckdb.backend.app.models.transition_state import TransitionState
 from tckdb.backend.app.models.person import Person
 from tckdb.backend.app.models.trans import Trans
 
@@ -41,8 +41,8 @@ __all__ = [
     "VDWEntry",
     "Reaction",
     "ReactionEntry",
-    "ReactionReactant",
-    "ReactionProduct",
+    "ReactionParticipant",
+    "TransitionState",
     "Person",
     "Trans",
 ]
