@@ -10,10 +10,12 @@ def test_reaction_schema():
         multiplicity=1,
         participants=[
             ReactionParticipantBase(step_index=0, role="reactant", species_id=1),
-            ReactionParticipantBase(step_index=1, role="product", species_id=2),
+            ReactionParticipantBase(step_index=1, role="ts", ts_id=3),
+            ReactionParticipantBase(step_index=2, role="product", species_id=2),
         ],
     )
     assert rxn.participants[0].species_id == 1
-    assert rxn.participants[1].species_id == 2
+    assert rxn.participants[1].ts_id == 3
+    assert rxn.participants[2].species_id == 2
 
     ReactionBase(formal_charge=0, multiplicity=1)

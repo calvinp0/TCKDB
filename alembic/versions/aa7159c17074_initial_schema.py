@@ -182,6 +182,43 @@ def upgrade() -> None:
     )
     op.create_index(op.f("ix_vdw_id"), "vdw", ["id"], unique=False)
     op.create_table(
+        "transition_state",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("label", sa.String(length=255), nullable=True),
+        sa.Column("charge", sa.Integer(), nullable=False),
+        sa.Column("multiplicity", sa.Integer(), nullable=False),
+        sa.Column("coordinates", MsgpackExt(), nullable=False),
+        sa.Column("opt_level_id", sa.Integer(), nullable=True),
+        sa.Column("freq_level_id", sa.Integer(), nullable=True),
+        sa.Column("sp_level_id", sa.Integer(), nullable=False),
+        sa.Column("opt_ess_id", sa.Integer(), nullable=True),
+        sa.Column("freq_ess_id", sa.Integer(), nullable=True),
+        sa.Column("sp_ess_id", sa.Integer(), nullable=False),
+        sa.Column("opt_path", sa.String(length=5000), nullable=True),
+        sa.Column("freq_path", sa.String(length=5000), nullable=True),
+        sa.Column("sp_path", sa.String(length=5000), nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column(
+            "updated_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
+        sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
+        sa.ForeignKeyConstraint(["opt_level_id"], ["level.id"]),
+        sa.ForeignKeyConstraint(["freq_level_id"], ["level.id"]),
+        sa.ForeignKeyConstraint(["sp_level_id"], ["level.id"]),
+        sa.ForeignKeyConstraint(["opt_ess_id"], ["ess.id"]),
+        sa.ForeignKeyConstraint(["freq_ess_id"], ["ess.id"]),
+        sa.ForeignKeyConstraint(["sp_ess_id"], ["ess.id"]),
+        sa.PrimaryKeyConstraint("id"),
+    )
+    op.create_table(
         "encorr",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column(
@@ -348,10 +385,31 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("reaction_id", sa.Integer(), nullable=False),
         sa.Column("kinetics", MsgpackExt(), nullable=True),
+        sa.Column("kinetics_fit", MsgpackExt(), nullable=True),
+        sa.Column("fit_error", MsgpackExt(), nullable=True),
+        sa.Column("atom_mapping", MsgpackExt(), nullable=True),
+        sa.Column("uncertainties", MsgpackExt(), nullable=True),
+        sa.Column("ess_id", sa.Integer(), nullable=True),
+        sa.Column("literature_id", sa.Integer(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column(
+            "updated_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=True,
+        ),
+        sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
         sa.ForeignKeyConstraint(
             ["reaction_id"],
             ["reaction.id"],
         ),
+        sa.ForeignKeyConstraint(["ess_id"], ["ess.id"]),
+        sa.ForeignKeyConstraint(["literature_id"], ["literature.id"]),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
@@ -563,7 +621,7 @@ def upgrade() -> None:
         sa.Column("step_index", sa.Integer(), nullable=False),
         sa.Column("role", sa.String(length=50), nullable=False),
         sa.Column("species_id", sa.Integer(), nullable=True),
-        sa.Column("np_species_id", sa.Integer(), nullable=True),
+        sa.Column("ts_id", sa.Integer(), nullable=True),
         sa.Column("vdw_id", sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(
             ["reaction_id"],
@@ -573,10 +631,7 @@ def upgrade() -> None:
             ["species_id"],
             ["species.id"],
         ),
-        sa.ForeignKeyConstraint(
-            ["np_species_id"],
-            ["nonphysicalspecies.id"],
-        ),
+        sa.ForeignKeyConstraint(["ts_id"], ["transition_state.id"]),
         sa.ForeignKeyConstraint(
             ["vdw_id"],
             ["vdw.id"],
@@ -617,11 +672,65 @@ def upgrade() -> None:
         ),
         sa.PrimaryKeyConstraint("species_id", "reviewer_id"),
     )
+    op.create_table(
+        "transition_state_authors",
+        sa.Column("transition_state_id", sa.Integer(), nullable=False),
+        sa.Column("author_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["transition_state_id"], ["transition_state.id"]),
+        sa.ForeignKeyConstraint(["author_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("transition_state_id", "author_id"),
+    )
+    op.create_table(
+        "transition_state_reviewers",
+        sa.Column("transition_state_id", sa.Integer(), nullable=False),
+        sa.Column("reviewer_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["transition_state_id"], ["transition_state.id"]),
+        sa.ForeignKeyConstraint(["reviewer_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("transition_state_id", "reviewer_id"),
+    )
+    op.create_table(
+        "reaction_authors",
+        sa.Column("reaction_id", sa.Integer(), nullable=False),
+        sa.Column("author_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["reaction_id"], ["reaction.id"]),
+        sa.ForeignKeyConstraint(["author_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("reaction_id", "author_id"),
+    )
+    op.create_table(
+        "reaction_reviewers",
+        sa.Column("reaction_id", sa.Integer(), nullable=False),
+        sa.Column("reviewer_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["reaction_id"], ["reaction.id"]),
+        sa.ForeignKeyConstraint(["reviewer_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("reaction_id", "reviewer_id"),
+    )
+    op.create_table(
+        "reaction_entry_authors",
+        sa.Column("reaction_entry_id", sa.Integer(), nullable=False),
+        sa.Column("author_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["reaction_entry_id"], ["reaction_entry.id"]),
+        sa.ForeignKeyConstraint(["author_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("reaction_entry_id", "author_id"),
+    )
+    op.create_table(
+        "reaction_entry_reviewers",
+        sa.Column("reaction_entry_id", sa.Integer(), nullable=False),
+        sa.Column("reviewer_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(["reaction_entry_id"], ["reaction_entry.id"]),
+        sa.ForeignKeyConstraint(["reviewer_id"], ["person.id"]),
+        sa.PrimaryKeyConstraint("reaction_entry_id", "reviewer_id"),
+    )
     # ### end Alembic commands ###
 
 
 def downgrade() -> None:
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table("reaction_entry_reviewers")
+    op.drop_table("reaction_entry_authors")
+    op.drop_table("reaction_reviewers")
+    op.drop_table("reaction_authors")
+    op.drop_table("transition_state_reviewers")
+    op.drop_table("transition_state_authors")
     op.drop_table("species_reviewers")
     op.drop_table("species_authors")
     op.drop_index(
@@ -635,6 +744,7 @@ def downgrade() -> None:
     op.drop_table("vdw_entry")
     op.drop_index(op.f("ix_reaction_entry_id"), table_name="reaction_entry")
     op.drop_table("reaction_entry")
+    op.drop_table("transition_state")
     op.drop_table("nonphysicalspecies")
     op.drop_table("literature_author")
     op.drop_table("freqscale")

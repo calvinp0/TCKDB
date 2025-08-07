@@ -11,7 +11,7 @@ class ReactionParticipantBase(BaseModel):
     step_index: int = Field(..., title="Position along the reaction coordinate")
     role: str = Field(..., title="Participant role (reactant, product, ts, vdw, intermediate)")
     species_id: Optional[int] = Field(None, title="Species identifier")
-    np_species_id: Optional[int] = Field(None, title="Non-physical species identifier")
+    ts_id: Optional[int] = Field(None, title="Transition state identifier")
     vdw_id: Optional[int] = Field(None, title="VDW identifier")
     model_config = ConfigDict(extra="forbid")
 
@@ -80,6 +80,20 @@ class ReactionEntryBase(BaseModel):
 
     reaction_id: int = Field(..., title="Parent reaction identifier")
     kinetics: Optional[Dict[str, object]] = Field(None, title="Kinetic data")
+    kinetics_fit: Optional[Dict[str, object]] = Field(
+        None, title="Fitted high-P limit kinetics"
+    )
+    fit_error: Optional[Dict[str, object]] = Field(
+        None, title="Errors introduced by the fit"
+    )
+    atom_mapping: Optional[Dict[str, object]] = Field(
+        None, title="Reaction atom mapping"
+    )
+    uncertainties: Optional[Dict[str, object]] = Field(
+        None, title="Uncertainties and their determination"
+    )
+    ess_id: Optional[int] = Field(None, title="ESS identifier")
+    literature_id: Optional[int] = Field(None, title="Citation identifier")
     model_config = ConfigDict(extra="forbid")
 
 

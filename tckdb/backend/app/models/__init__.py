@@ -21,6 +21,7 @@ from tckdb.backend.app.models.reaction import (
     ReactionEntry,
     ReactionParticipant,
 )
+from tckdb.backend.app.models.transition_state import TransitionState
 from tckdb.backend.app.models.person import Person
 from tckdb.backend.app.models.trans import Trans
 
@@ -41,6 +42,7 @@ __all__ = [
     "Reaction",
     "ReactionEntry",
     "ReactionParticipant",
+    "TransitionState",
     "Person",
     "Trans",
 ]
