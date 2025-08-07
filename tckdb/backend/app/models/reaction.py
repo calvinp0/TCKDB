@@ -19,11 +19,8 @@ class Reaction(Base):
     labels = Column(MsgpackExt, nullable=True)
     reviewer_flags = Column(MsgpackExt, nullable=True)
 
-    reactant_assocs = relationship(
-        "ReactionReactant", back_populates="reaction", cascade="all, delete-orphan"
-    )
-    product_assocs = relationship(
-        "ReactionProduct", back_populates="reaction", cascade="all, delete-orphan"
+    participants = relationship(
+        "ReactionParticipant", back_populates="reaction", cascade="all, delete-orphan"
     )
     entries = relationship(
         "ReactionEntry", back_populates="reaction", cascade="all, delete-orphan"
@@ -33,33 +30,22 @@ class Reaction(Base):
         return f"<{self.__class__.__name__}(id={self.id}, charge={self.formal_charge})>"
 
 
-class ReactionReactant(Base):
-    """Association table linking reactions to reactant species or VDW wells"""
+class ReactionParticipant(Base):
+    """Association table linking reactions to species, VDW wells, or non-physical species"""
 
-    __tablename__ = "reaction_reactant"
+    __tablename__ = "reaction_participant"
 
-    reaction_id = Column(Integer, ForeignKey("reaction.id"), primary_key=True)
-    order_index = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True, nullable=False)
+    reaction_id = Column(Integer, ForeignKey("reaction.id"), nullable=False)
+    step_index = Column(Integer, nullable=False)
+    role = Column(String(50), nullable=False)
     species_id = Column(Integer, ForeignKey("species.id"), nullable=True)
+    np_species_id = Column(Integer, ForeignKey("nonphysicalspecies.id"), nullable=True)
     vdw_id = Column(Integer, ForeignKey("vdw.id"), nullable=True)
 
-    reaction = relationship("Reaction", back_populates="reactant_assocs")
+    reaction = relationship("Reaction", back_populates="participants")
     species = relationship("Species")
-    vdw = relationship("VDW")
-
-
-class ReactionProduct(Base):
-    """Association table linking reactions to product species or VDW wells"""
-
-    __tablename__ = "reaction_product"
-
-    reaction_id = Column(Integer, ForeignKey("reaction.id"), primary_key=True)
-    order_index = Column(Integer, primary_key=True)
-    species_id = Column(Integer, ForeignKey("species.id"), nullable=True)
-    vdw_id = Column(Integer, ForeignKey("vdw.id"), nullable=True)
-
-    reaction = relationship("Reaction", back_populates="product_assocs")
-    species = relationship("Species")
+    np_species = relationship("NonPhysicalSpecies")
     vdw = relationship("VDW")
 
 

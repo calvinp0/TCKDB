@@ -5,6 +5,17 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
+class ReactionParticipantBase(BaseModel):
+    """Participant in a reaction pathway"""
+
+    step_index: int = Field(..., title="Position along the reaction coordinate")
+    role: str = Field(..., title="Participant role (reactant, product, ts, vdw, intermediate)")
+    species_id: Optional[int] = Field(None, title="Species identifier")
+    np_species_id: Optional[int] = Field(None, title="Non-physical species identifier")
+    vdw_id: Optional[int] = Field(None, title="VDW identifier")
+    model_config = ConfigDict(extra="forbid")
+
+
 class ReactionBase(BaseModel):
     """Shared properties for reactions"""
 
@@ -12,27 +23,13 @@ class ReactionBase(BaseModel):
     multiplicity: int = Field(..., title="Spin multiplicity")
     family: Optional[str] = Field(None, title="RMG reaction family tag")
     labels: Optional[List[str]] = Field(None, title="User labels")
-    reactant_species_ids: Optional[List[int]] = Field(
-        None, title="Reactant species identifiers"
+    participants: Optional[List[ReactionParticipantBase]] = Field(
+        None, title="Reaction participants"
     )
-    reactant_vdw_ids: Optional[List[int]] = Field(
-        None, title="Reactant VDW identifiers"
-    )
-    product_species_ids: Optional[List[int]] = Field(
-        None, title="Product species identifiers"
-    )
-    product_vdw_ids: Optional[List[int]] = Field(None, title="Product VDW identifiers")
     reviewer_flags: Optional[Dict[str, str]] = Field(None, title="Reviewer flags")
     model_config = ConfigDict(extra="forbid")
 
-    @field_validator(
-        "labels",
-        "reactant_species_ids",
-        "reactant_vdw_ids",
-        "product_species_ids",
-        "product_vdw_ids",
-        mode="before",
-    )
+    @field_validator("labels", "participants", mode="before")
     @classmethod
     def ensure_list(cls, value):
         """Ensure list fields are lists"""
