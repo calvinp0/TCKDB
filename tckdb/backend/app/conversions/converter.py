@@ -118,7 +118,7 @@ def adjlist_from_smiles(
             else:
                 raise ServiceUnavailableError(
                     f"RMG MIT service timeout after {max_retries} attempts: {str(e)}"
-                )
+                ) from e
         except requests.exceptions.ConnectionError as e:
             last_exception = e
             if attempt < max_retries - 1:
@@ -131,7 +131,7 @@ def adjlist_from_smiles(
             else:
                 raise ServiceUnavailableError(
                     f"RMG MIT service connection failed after {max_retries} attempts: {str(e)}"
-                )
+                ) from e
         except requests.exceptions.RequestException as e:
             last_exception = e
             if attempt < max_retries - 1:
@@ -144,7 +144,7 @@ def adjlist_from_smiles(
             else:
                 raise ServiceUnavailableError(
                     f"RMG MIT service request failed after {max_retries} attempts: {str(e)}"
-                )
+                ) from e
         except Exception as e:
             print(f"Unexpected error occurred: {e}")
             return None
