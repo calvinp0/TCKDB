@@ -16,7 +16,9 @@ def find_molecule_env_python() -> Optional[str]:
     home = os.path.expanduser("~")
 
 
-    molecule_pypath_0 = os.path.join("/opt", "conda", "envs", "molecule_env", "bin", "python")
+    molecule_pypath_0 = os.path.join(
+        "/opt", "conda", "envs", "molecule_env", "bin", "python"
+        )
 
     molecule_pypath_1 = os.path.join(
         os.path.dirname(os.path.dirname(os.path.dirname(sys.executable))),
