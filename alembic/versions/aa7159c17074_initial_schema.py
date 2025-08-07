@@ -733,9 +733,7 @@ def downgrade() -> None:
     op.drop_table("transition_state_authors")
     op.drop_table("species_reviewers")
     op.drop_table("species_authors")
-    op.drop_index(
-        op.f("ix_reaction_participant_id"), table_name="reaction_participant"
-    )
+    op.drop_index(op.f("ix_reaction_participant_id"), table_name="reaction_participant")
     op.drop_table("reaction_participant")
     op.drop_table("species")
     op.drop_table("np_species_reviewers")

@@ -69,7 +69,10 @@ transition_state_authors = Table(
     "transition_state_authors",
     Base.metadata,
     Column(
-        "transition_state_id", Integer, ForeignKey("transition_state.id"), primary_key=True
+        "transition_state_id",
+        Integer,
+        ForeignKey("transition_state.id"),
+        primary_key=True,
     ),
     Column("author_id", Integer, ForeignKey("person.id"), primary_key=True),
 )
@@ -78,7 +81,10 @@ transition_state_reviewers = Table(
     "transition_state_reviewers",
     Base.metadata,
     Column(
-        "transition_state_id", Integer, ForeignKey("transition_state.id"), primary_key=True
+        "transition_state_id",
+        Integer,
+        ForeignKey("transition_state.id"),
+        primary_key=True,
     ),
     Column("reviewer_id", Integer, ForeignKey("person.id"), primary_key=True),
 )

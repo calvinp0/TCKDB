@@ -9,7 +9,9 @@ class ReactionParticipantBase(BaseModel):
     """Participant in a reaction pathway"""
 
     step_index: int = Field(..., title="Position along the reaction coordinate")
-    role: str = Field(..., title="Participant role (reactant, product, ts, vdw, intermediate)")
+    role: str = Field(
+        ..., title="Participant role (reactant, product, ts, vdw, intermediate)"
+    )
     species_id: Optional[int] = Field(None, title="Species identifier")
     ts_id: Optional[int] = Field(None, title="Transition state identifier")
     vdw_id: Optional[int] = Field(None, title="VDW identifier")

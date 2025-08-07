@@ -41,10 +41,14 @@ class TransitionState(Base, AuditMixin):
     sp_path = Column(String(5000), nullable=False)
 
     authors = relationship(
-        "Person", secondary=transition_state_authors, backref="authors_transition_states"
+        "Person",
+        secondary=transition_state_authors,
+        backref="authors_transition_states",
     )
     reviewers = relationship(
-        "Person", secondary=transition_state_reviewers, backref="reviewers_transition_states"
+        "Person",
+        secondary=transition_state_reviewers,
+        backref="reviewers_transition_states",
     )
 
     def __str__(self) -> str:  # pragma: no cover - simple string representation
