@@ -27,6 +27,7 @@ from tckdb.backend.app.utils.python_paths import MOLECULE_PYTHON
 
 class ServiceUnavailableError(Exception):
     """Raised when an external service is unavailable or times out."""
+
     pass
 
 
@@ -49,7 +50,9 @@ def inchi_from_smiles(smiles: str) -> Union[str, None]:
     return inchi
 
 
-def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) -> Union[str, None]:
+def adjlist_from_smiles(
+    smiles: str, max_retries: int = 3, timeout: int = 10
+) -> Union[str, None]:
     """
     Get an RMG adjacency list from a SMILES descriptor.
     Uses the RMG MIT web service for the conversion.
@@ -76,7 +79,7 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
     }
 
     last_exception = None
-    
+
     for attempt in range(max_retries):
         try:
             # Send the GET request
@@ -88,8 +91,10 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
             elif response.status_code in [429, 502, 503, 504]:
                 # Rate limited or server error - retry after delay
                 if attempt < max_retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff
-                    print(f"RMG service returned {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
+                    wait_time = 2**attempt  # Exponential backoff
+                    print(
+                        f"RMG service returned {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})"
+                    )
                     time.sleep(wait_time)
                     continue
                 else:
@@ -104,8 +109,10 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
         except requests.exceptions.Timeout as e:
             last_exception = e
             if attempt < max_retries - 1:
-                wait_time = 2 ** attempt
-                print(f"Request timeout, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
+                wait_time = 2**attempt
+                print(
+                    f"Request timeout, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})"
+                )
                 time.sleep(wait_time)
                 continue
             else:
@@ -115,8 +122,10 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
         except requests.exceptions.ConnectionError as e:
             last_exception = e
             if attempt < max_retries - 1:
-                wait_time = 2 ** attempt
-                print(f"Connection error, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
+                wait_time = 2**attempt
+                print(
+                    f"Connection error, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})"
+                )
                 time.sleep(wait_time)
                 continue
             else:
@@ -126,8 +135,10 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
         except requests.exceptions.RequestException as e:
             last_exception = e
             if attempt < max_retries - 1:
-                wait_time = 2 ** attempt
-                print(f"Request error, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
+                wait_time = 2**attempt
+                print(
+                    f"Request error, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})"
+                )
                 time.sleep(wait_time)
                 continue
             else:
@@ -137,7 +148,7 @@ def adjlist_from_smiles(smiles: str, max_retries: int = 3, timeout: int = 10) ->
         except Exception as e:
             print(f"Unexpected error occurred: {e}")
             return None
-    
+
     # This should not be reached, but just in case
     raise ServiceUnavailableError(
         f"RMG MIT service unavailable after {max_retries} attempts: {str(last_exception)}"
@@ -330,7 +341,7 @@ def add_common_isotopes_to_coords(
     xyz: Dict[
         str,
         Union[Tuple[Tuple[float, float, float], ...], Tuple[int, ...], Tuple[str, ...]],
-    ]
+    ],
 ):
     """
     Add the common isotopes to the coordinates dictionary if it's missing.

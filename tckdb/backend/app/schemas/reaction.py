@@ -21,9 +21,7 @@ class ReactionBase(BaseModel):
     product_species_ids: Optional[List[int]] = Field(
         None, title="Product species identifiers"
     )
-    product_vdw_ids: Optional[List[int]] = Field(
-        None, title="Product VDW identifiers"
-    )
+    product_vdw_ids: Optional[List[int]] = Field(None, title="Product VDW identifiers")
     reviewer_flags: Optional[Dict[str, str]] = Field(None, title="Reviewer flags")
     model_config = ConfigDict(extra="forbid")
 

@@ -75,4 +75,6 @@ class ReactionEntry(Base):
     reaction = relationship("Reaction", back_populates="entries")
 
     def __repr__(self) -> str:  # pragma: no cover - simple representation
-        return f"<{self.__class__.__name__}(id={self.id}, reaction_id={self.reaction_id})>"
+        return (
+            f"<{self.__class__.__name__}(id={self.id}, reaction_id={self.reaction_id})>"
+        )

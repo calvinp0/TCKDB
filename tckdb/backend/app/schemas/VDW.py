@@ -23,9 +23,7 @@ class VDWBase(BaseModel):
     reviewer_flags: Optional[Dict[str, str]] = Field(None, title="Reviewer flags")
     model_config = ConfigDict(extra="forbid")
 
-    @field_validator(
-        "labels", "constituents", "fragment_orientation", mode="before"
-    )
+    @field_validator("labels", "constituents", "fragment_orientation", mode="before")
     @classmethod
     def ensure_list(cls, value):
         """Ensure list fields are lists"""
@@ -109,4 +107,3 @@ class VDWEntryInDB(VDWEntryInDBBase):
     """Properties stored in DB"""
 
     pass
-

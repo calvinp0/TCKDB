@@ -1,6 +1,4 @@
-
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
-from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
 
 from tckdb.backend.app.db.base_class import Base
@@ -22,12 +20,12 @@ class VDW(Base):
     labels = Column(MsgpackExt, nullable=True)
     fragment_orientation = Column(MsgpackExt, nullable=True)
 
-    entries = relationship("VDWEntry", back_populates="vdw", cascade="all, delete-orphan")
+    entries = relationship(
+        "VDWEntry", back_populates="vdw", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:  # pragma: no cover - simple representation
-        return (
-            f"<{self.__class__.__name__}(id={self.id}, inchi_augmented='{self.inchi_augmented}')>"
-        )
+        return f"<{self.__class__.__name__}(id={self.id}, inchi_augmented='{self.inchi_augmented}')>"
 
 
 class VDWEntry(Base):
