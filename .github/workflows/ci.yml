@@ -14,8 +14,7 @@ jobs:
     services:
       test-db:
         image: postgres:13
-        ports:
-          - 5434:5432
+        ports: [5434:5432]
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -36,17 +35,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Checkout Molecule Repository
-        uses: actions/checkout@v4
-        with:
-          repository: ReactionMechanismGenerator/molecule
-          path: ./code/Molecule
-
-      - name: Checkout RMG-database Repository
-        uses: actions/checkout@v4
-        with:
-          repository: ReactionMechanismGenerator/RMG-database
-          path: ./code/RMG-database
+      # … other checkout steps …
 
       - name: Set Environment Variables
         run: |
@@ -58,12 +47,20 @@ jobs:
           echo "TESTING=true" >> $GITHUB_ENV
           echo "FAST_API_PORT=8001" >> $GITHUB_ENV
 
-      # 3. Wait for test-db Service to Be Ready
+      # ─────── DEBUG: did secrets reach the runner? ───────
+      - name: Show secret env (masked)
+        run: |
+          echo "USER    = [${POSTGRES_USER:-<empty>}]"
+          echo "PASS len= ${#POSTGRES_PASSWORD}"
+          echo "DB      = [${POSTGRES_DB:-<empty>}]"
+        shell: bash
+      # ────────────────────────────────────────────────────
+
       - name: Wait for test-db to be Ready
         run: |
           echo "Waiting for test-db to be ready..."
           for i in {1..30}; do
-            if pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER; then
+            if pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT; then
               echo "test-db is ready!"
               exit 0
             fi
