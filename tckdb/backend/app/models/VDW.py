@@ -19,7 +19,7 @@ class VDW(Base):
     molecular_weight = Column(Float, nullable=True)
     charge = Column(Integer, nullable=False)
     multiplicity = Column(Integer, nullable=False)
-    labels = Column(ARRAY(String(255)), nullable=True)
+    labels = Column(MsgpackExt, nullable=True)
     fragment_orientation = Column(MsgpackExt, nullable=True)
 
     entries = relationship("VDWEntry", back_populates="vdw", cascade="all, delete-orphan")
