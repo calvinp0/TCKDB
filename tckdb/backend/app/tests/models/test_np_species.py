@@ -45,9 +45,6 @@ def test_non_physical_species_model():
         is_well=True,
         is_global_min=True,
         is_ts=False,
-        opt_path="path_opt",
-        freq_path="path_freq",
-        sp_path="path_sp",
         extras={"reason": "testing extras"},
     )
     assert np_species_1.label == "formaldehyde"
@@ -72,11 +69,6 @@ def test_non_physical_species_model():
     assert np_species_1.global_min_geometry is None
     assert np_species_1.is_ts is False
     assert np_species_1.irc_trajectories is None
-    assert np_species_1.opt_path == "path_opt"
-    assert np_species_1.freq_path == "path_freq"
-    assert np_species_1.scan_paths is None
-    assert np_species_1.irc_paths is None
-    assert np_species_1.sp_path == "path_sp"
     assert np_species_1.unconverged_jobs is None
     assert np_species_1.extras == {"reason": "testing extras"}
     assert (

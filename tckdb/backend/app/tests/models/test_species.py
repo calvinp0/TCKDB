@@ -103,9 +103,6 @@ species_1 = Species(
         },
     },
     encorr_id=33,
-    opt_path="path_opt",
-    freq_path="path_freq",
-    sp_path="path_sp",
     extras={"tst": "testing extras"},
 )
 
@@ -204,11 +201,6 @@ def test_species_model():
         },
     }
     assert species_1.encorr_id == 33
-    assert species_1.opt_path == "path_opt"
-    assert species_1.freq_path == "path_freq"
-    assert species_1.scan_paths is None
-    assert species_1.irc_paths is None
-    assert species_1.sp_path == "path_sp"
     assert species_1.unconverged_jobs is None
     assert species_1.extras == {"tst": "testing extras"}
     assert str(species_1) == "<Species(id=None, label=formaldehyde, smiles=C=O)>"

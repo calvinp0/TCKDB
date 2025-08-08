@@ -133,9 +133,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_1.smiles == "C"
     assert spc_1.inchi == "InChI=1S/CH4/h1H4"
@@ -174,9 +171,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_2.smiles == "C"
     assert spc_2.inchi == "InChI=1S/CH4/h1H4"
@@ -216,9 +210,6 @@ def test_species_schema():
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         heat_capacity_model=heat_capacity_model,
         # #encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_3.smiles == "C"
     assert spc_3.inchi == "InChI=1S/CH4/h1H4"
@@ -262,9 +253,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_4.smiles == "C"
     assert spc_4.inchi == "InChI=1S/CH4/h1H4"
@@ -304,9 +292,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert (
         spc_5.graph
@@ -340,9 +325,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert (
         spc_6.graph
@@ -378,9 +360,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 3. fragments
@@ -410,9 +389,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_7.fragments == [[1, 2, 3], [4, 5]]
     spc_8 = SpeciesCreate(
@@ -440,9 +416,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_8.fragments is None  # one fragments translates to None
     with pytest.raises(ValidationError):
@@ -473,9 +446,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # fragments length does not match the number of atoms from the coordinates
@@ -505,9 +475,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # 0-indexed atoms in fragments
@@ -537,9 +504,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 3. fragment_orientation
@@ -573,9 +537,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_9.fragment_orientation == [
         {"cm": [1, 2, 3], "x": 1, "y": 2, "z": 3},
@@ -608,9 +569,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # not specifying fragment_orientation, but specifying fragments
@@ -639,9 +597,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # wring length of fragment_orientation
@@ -671,9 +626,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # extra keys in fragment_orientation
@@ -703,9 +655,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # invalid key fragment_orientation
@@ -735,9 +684,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(TypeError):
         # wrong value type for 'cm' key
@@ -767,9 +713,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # wrong vector length for 'cm' key
@@ -799,9 +742,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(TypeError):
         # wrong value type for 'x' key
@@ -831,9 +771,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 4. point_group
@@ -862,9 +799,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_10.point_group == "Cinfv"
     spc_11 = SpeciesCreate(
@@ -891,9 +825,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_11.point_group == "D4"
     spc_12 = SpeciesCreate(
@@ -920,9 +851,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_12.point_group == "Oh"
     spc_13 = SpeciesCreate(
@@ -949,9 +877,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_13.point_group == "I"
     spc_14 = SpeciesCreate(
@@ -978,9 +903,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_14.point_group == "C6"
     with pytest.raises(ValidationError):
@@ -1009,9 +931,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # wrong last char for point group
@@ -1039,9 +958,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # wrong length of point group
@@ -1069,9 +985,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # unexpected char in point group
@@ -1099,9 +1012,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 5. chirality
@@ -1130,9 +1040,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_15.chirality == {(1,): "R"}
     spc_16 = SpeciesCreate(
@@ -1160,9 +1067,6 @@ def test_species_schema():
         Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_16.chirality == {(5,): "NR", (6,): "R", (7, 8): "E"}
     with pytest.raises(ValidationError):
@@ -1192,9 +1096,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # not a carbon center
@@ -1223,9 +1124,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # unsupported value
@@ -1254,9 +1152,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # an `E` type for an atom center
@@ -1285,9 +1180,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # an `S` type for a double bond chiral center
@@ -1316,9 +1208,6 @@ def test_species_schema():
             Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # three chiral centers
@@ -1347,9 +1236,6 @@ def test_species_schema():
             Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # repeated atom index
@@ -1378,9 +1264,6 @@ def test_species_schema():
             Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # a non-nitrogen 'NR'
@@ -1409,9 +1292,6 @@ def test_species_schema():
             Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
     with pytest.raises(ValidationError):
         # a nitrogen 'R'
@@ -1440,9 +1320,6 @@ def test_species_schema():
             Cp_values=[96.44, 115.77, 131.34, 143.47, 160.79, 171.46, 184.18],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 6. conformation_method
@@ -1470,9 +1347,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_17.conformation_method == "ARC v1.1.0"
     spc_18 = SpeciesCreate(
@@ -1501,9 +1375,6 @@ def test_species_schema():
         Cp_values=[28.85, 29.18, 19.26, 29.33, 29.63, 30.20, 32.30],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_18.conformation_method is None
     with pytest.raises(ValidationError):
@@ -1531,9 +1402,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 6. electronic_energy
@@ -1562,9 +1430,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 7. E0
@@ -1593,9 +1458,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 8. hessian, frequencies, scaled_projected_frequencies, normal_displacement_modes, and #freq_id
@@ -1620,9 +1482,6 @@ def test_species_schema():
         Cp_values=[20.79, 20.79, 20.79, 20.79, 20.79, 20.79, 20.79],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_19.hessian is None
     assert spc_19.frequencies is None
@@ -1653,9 +1512,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
     )
     assert spc_20.hessian == [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -1704,9 +1560,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1735,9 +1588,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1766,9 +1616,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1796,9 +1643,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1827,9 +1671,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1858,9 +1699,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1891,9 +1729,6 @@ def test_species_schema():
             Cp_values=[28.85, 29.18, 19.26, 29.33, 29.63, 30.20, 32.30],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1922,9 +1757,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -1954,10 +1786,6 @@ def test_species_schema():
             S298=186.06,
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            irc_paths=["path/to/irc/job.log"],
         )
 
     with pytest.raises(ValidationError):
@@ -1985,9 +1813,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2027,9 +1852,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2068,9 +1890,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2099,9 +1918,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2129,9 +1945,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2160,9 +1973,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2191,9 +2001,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 9. rigid_rotor
@@ -2225,9 +2032,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 10. statmech_treatment
@@ -2259,9 +2063,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2289,9 +2090,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 10. rotational_constants
@@ -2322,9 +2120,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2353,9 +2148,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2386,9 +2178,6 @@ def test_species_schema():
             Cp_values=[28.85, 29.18, 19.26, 29.33, 29.63, 30.20, 32.30],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -2412,9 +2201,6 @@ def test_species_schema():
             Cp_values=[20.79, 20.79, 20.79, 20.79, 20.79, 20.79, 20.79],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 11. torsions
@@ -2550,12 +2336,7 @@ def test_species_schema():
         Cp_values=[52.03, 60.75, 68.85, 76.04, 87.89, 96.90, 110.69, 117.31, 120.40],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
-        scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
     )
-    assert spc_21.scan_paths == {((4, 1, 2, 3),): "path/to/scan/job.log"}
     assert spc_21.torsions[0].computation_type == "continuous constrained optimization"
     assert spc_21.torsions[0].dimension == 1
     assert spc_21.torsions[0].treatment == "hindered rotor"
@@ -2626,9 +2407,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # not specifying torsions.computation_type
@@ -2668,10 +2446,6 @@ def test_species_schema():
         Cp_values=[52.03, 60.75, 68.85, 76.04, 87.89, 96.90, 110.69, 117.31, 120.40],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
-        scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
     )
     assert (
         spc_21_b.torsions[0].computation_type == "continuous constrained optimization"
@@ -2726,10 +2500,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -2781,10 +2551,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -2837,10 +2603,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -2891,10 +2653,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -2945,10 +2703,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3000,10 +2754,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3055,10 +2805,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3110,10 +2856,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3165,10 +2907,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3219,10 +2957,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3274,10 +3008,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3379,10 +3109,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3434,10 +3160,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3488,10 +3210,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3546,10 +3264,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     # 12. conformers
@@ -3623,10 +3337,6 @@ def test_species_schema():
         Cp_values=[52.03, 60.75, 68.85, 76.04, 87.89, 96.90, 110.69, 117.31, 120.40],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
-        scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
     )
     assert len(spc_22.conformers) == 2
     assert spc_22.conformers[0]["energy"] == -0.8462
@@ -3731,10 +3441,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3820,10 +3526,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3906,10 +3608,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -3994,10 +3692,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     with pytest.raises(ValidationError):
@@ -4082,10 +3776,6 @@ def test_species_schema():
             ],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            scan_paths={((4, 1, 2, 3),): "path/to/scan/job.log"},
         )
 
     # 13. H298, S298, Cp_values, Cp_T_list
@@ -4118,10 +3808,6 @@ def test_species_schema():
         rigid_rotor="spherical top",
         statmech_treatment="RRHO",
         rotational_constants=[1, 2, 3],
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
-        irc_paths=["path/to/forward/irc/job.log", "path/to/reverse/irc/job.log"],
     )
 
     with pytest.raises(ValidationError):
@@ -4149,9 +3835,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -4179,9 +3862,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -4209,9 +3889,6 @@ def test_species_schema():
             S298=186.06,
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -4239,9 +3916,6 @@ def test_species_schema():
             S298=186.06,
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -4270,18 +3944,11 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     # 14. paths
-    assert spc_20.opt_path == "path/to/opt/job.log"
-    assert spc_20.freq_path == "path/to/freq/job.log"
-    assert spc_20.sp_path == "path/to/sp/job.log"
 
     with pytest.raises(ValidationError):
-        # not specifying opt_path
         SpeciesCreate(
             smiles="C",
             charge=0,
@@ -4306,12 +3973,9 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
-        # not specifying freq_path
         SpeciesCreate(
             smiles="C",
             charge=0,
@@ -4336,12 +4000,9 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            sp_path="path/to/sp/job.log",
         )
 
     with pytest.raises(ValidationError):
-        # not specifying sp_path
         SpeciesCreate(
             smiles="C",
             charge=0,
@@ -4366,8 +4027,6 @@ def test_species_schema():
             Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
             Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
             # encorr_id=2,
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
         )
 
     with pytest.raises(ValidationError):
@@ -4393,42 +4052,6 @@ def test_species_schema():
             rigid_rotor="spherical top",
             statmech_treatment="RRHO",
             rotational_constants=[1, 2, 3],
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-        )
-
-    with pytest.raises(ValidationError):
-        # wrong number of irc_path for a TS
-        SpeciesCreate(
-            smiles="C",
-            charge=0,
-            multiplicity=1,
-            coordinates=ch4_xyz,
-            external_symmetry=4,
-            point_group="Td",
-            conformation_method="ARC v1.1.0",
-            is_well=True,
-            is_ts=True,  # TS
-            irc_trajectories=[[ch4_xyz], [ch4_xyz]],
-            electronic_energy=-365.544,
-            E0=-370.240,
-            hessian=[[1] * 15] * 15,
-            frequencies=[-3046, 1555, 1555, 3168, 3168, 3168, 1368, 1368, 1368],
-            scaled_projected_frequencies=ch4_scaled_freqs,
-            normal_displacement_modes=ch4_normal_disp_modes,
-            # freq_id=1,
-            rigid_rotor="spherical top",
-            statmech_treatment="RRHO",
-            rotational_constants=[1, 2, 3],
-            opt_path="path/to/opt/job.log",
-            freq_path="path/to/freq/job.log",
-            sp_path="path/to/sp/job.log",
-            irc_paths=[
-                "path/to/forward/irc/job.log",
-                "path/to/reverse/irc/job.log",
-                "path/to/third/irc/job.log",
-            ],
         )
 
     # 15. unconverged_jobs, extras
@@ -4456,9 +4079,6 @@ def test_species_schema():
         Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
         Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
         # encorr_id=2,
-        opt_path="path/to/opt/job.log",
-        freq_path="path/to/freq/job.log",
-        sp_path="path/to/sp/job.log",
         #  unconverged_jobs=[{'job type': 'sp',
         #                     'issue': 'SCF',
         #                     'troubleshooting': 'keyword',
@@ -4498,9 +4118,6 @@ def test_species_schema():
     #                 Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
     #                 Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
     #                 #encorr_id=2,
-    #                 opt_path='path/to/opt/job.log',
-    #                 freq_path='path/to/freq/job.log',
-    #                 sp_path='path/to/sp/job.log',
     # unconverged_jobs=[{'job_type': 'sp',
     #                    'issue': 'SCF',
     #                    'troubleshooting': 'keyword',
@@ -4533,9 +4150,6 @@ def test_species_schema():
     #                 Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
     #                 Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
     #                 #encorr_id=2,
-    #                 opt_path='path/to/opt/job.log',
-    #                 freq_path='path/to/freq/job.log',
-    #                 sp_path='path/to/sp/job.log',
     #                 unconverged_jobs=[{'issue': 'SCF',
     #                                    'troubleshooting': 'keyword',
     #                                    'comment': 'txt',
@@ -4567,9 +4181,6 @@ def test_species_schema():
     #                 Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
     #                 Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
     #                 #encorr_id=2,
-    #                 opt_path='path/to/opt/job.log',
-    #                 freq_path='path/to/freq/job.log',
-    #                 sp_path='path/to/sp/job.log',
     #                 unconverged_jobs=[{'job_type': 'sp',
     #                                    'issue': 'SCF',
     #                                    'troubleshooting': 'keyword',
@@ -4601,9 +4212,6 @@ def test_species_schema():
     #                 Cp_values=[36.07, 40.38, 45.77, 51.63, 62.30, 71.00, 85.94],
     #                 Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500],
     #                 #encorr_id=2,
-    #                 opt_path='path/to/opt/job.log',
-    #                 freq_path='path/to/freq/job.log',
-    #                 sp_path='path/to/sp/job.log',
     #                 unconverged_jobs=[{'job_type': 'other',
     #                                    'issue': 'SCF',
     #                                    'troubleshooting': 'keyword',
