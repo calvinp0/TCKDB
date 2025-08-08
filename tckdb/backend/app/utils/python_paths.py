@@ -15,6 +15,8 @@ def find_molecule_env_python() -> Optional[str]:
     """
     home = os.path.expanduser("~")
 
+    molecule_pypath = os.path.join(home, 'miniforge3', 'envs', 'molecule_env', 'bin', 'python')
+
     molecule_pypath_0 = os.path.join(
         "/opt", "conda", "envs", "molecule_env", "bin", "python"
     )
@@ -39,6 +41,7 @@ def find_molecule_env_python() -> Optional[str]:
     )
 
     potential_paths = [
+        molecule_pypath,
         molecule_pypath_0,
         molecule_pypath_1,
         molecule_pypath_2,
