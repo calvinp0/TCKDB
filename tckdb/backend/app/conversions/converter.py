@@ -199,6 +199,10 @@ def smiles_and_inchi_from_adjlist(adjlist: str) -> Optional[Tuple[str, str]]:
             return None
 
     except subprocess.CalledProcessError as e:
+        # If the molecule package isn't available, allow the caller to
+        # continue by returning ``None`` without logging a noisy error.
+        if "Import Error" in e.stderr:
+            return None
         print(
             f"Subprocess error (exit code {e.returncode}): {e.stderr}", file=sys.stderr
         )
@@ -245,6 +249,8 @@ def multiplicity_from_adjlist(adjlist: str) -> Optional[int]:
                 error_message += f" Subprocess stderr: {result.stderr.strip()}"
             print(error_message, file=sys.stderr)
     except subprocess.CalledProcessError as e:
+        if "Import Error" in e.stderr:
+            return None
         print(
             f"Subprocess error (exit code {e.returncode}): {e.stderr}", file=sys.stderr
         )

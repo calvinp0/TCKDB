@@ -19,8 +19,10 @@ if TESTING:
 else:
     env_path = "./tckdb/backend/app/core/.env"
 
-# Load environment variables from the determined .env file
-load_dotenv(dotenv_path=env_path, override=True)
+# Load environment variables from the determined .env file. Existing
+# environment variables take precedence so test suites can supply their
+# own settings without being overwritten by the file defaults.
+load_dotenv(dotenv_path=env_path, override=False)
 
 
 def getenv_boolean(

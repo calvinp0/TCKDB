@@ -216,33 +216,6 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
-        "qc_file",
-        sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("species_id", sa.Integer(), nullable=True),
-        sa.Column("transition_state_id", sa.Integer(), nullable=True),
-        sa.Column("np_species_id", sa.Integer(), nullable=True),
-        sa.Column("calc_type", sa.String(length=20), nullable=False),
-        sa.Column("status", sa.String(length=20), nullable=False),
-        sa.Column("level_id", sa.Integer(), nullable=False),
-        sa.Column("ess_id", sa.Integer(), nullable=False),
-        sa.Column("input_name", sa.String(length=255), nullable=True),
-        sa.Column("output_name", sa.String(length=255), nullable=True),
-        sa.Column("input_file", sa.LargeBinary(), nullable=True),
-        sa.Column("output_file", sa.LargeBinary(), nullable=True),
-        sa.Column("compressed", sa.Boolean(), nullable=False),
-        sa.Column("checksum", sa.String(length=64), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=True),
-        sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
-        sa.ForeignKeyConstraint(["species_id"], ["species.id"]),
-        sa.ForeignKeyConstraint(["transition_state_id"], ["transition_state.id"]),
-        sa.ForeignKeyConstraint(["np_species_id"], ["nonphysicalspecies.id"]),
-        sa.ForeignKeyConstraint(["level_id"], ["level.id"]),
-        sa.ForeignKeyConstraint(["ess_id"], ["ess.id"]),
-        sa.PrimaryKeyConstraint("id"),
-    )
-    op.create_index(op.f("ix_qc_file_id"), "qc_file", ["id"], unique=False)
-    op.create_table(
         "encorr",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column(
@@ -629,6 +602,33 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
+        "qc_file",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("species_id", sa.Integer(), nullable=True),
+        sa.Column("transition_state_id", sa.Integer(), nullable=True),
+        sa.Column("np_species_id", sa.Integer(), nullable=True),
+        sa.Column("calc_type", sa.String(length=20), nullable=False),
+        sa.Column("status", sa.String(length=20), nullable=False),
+        sa.Column("level_id", sa.Integer(), nullable=False),
+        sa.Column("ess_id", sa.Integer(), nullable=False),
+        sa.Column("input_name", sa.String(length=255), nullable=True),
+        sa.Column("output_name", sa.String(length=255), nullable=True),
+        sa.Column("input_file", sa.LargeBinary(), nullable=True),
+        sa.Column("output_file", sa.LargeBinary(), nullable=True),
+        sa.Column("compressed", sa.Boolean(), nullable=False),
+        sa.Column("checksum", sa.String(length=64), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=True),
+        sa.Column("deleted_at", sa.DateTime(timezone=True), nullable=True),
+        sa.ForeignKeyConstraint(["species_id"], ["species.id"]),
+        sa.ForeignKeyConstraint(["transition_state_id"], ["transition_state.id"]),
+        sa.ForeignKeyConstraint(["np_species_id"], ["nonphysicalspecies.id"]),
+        sa.ForeignKeyConstraint(["level_id"], ["level.id"]),
+        sa.ForeignKeyConstraint(["ess_id"], ["ess.id"]),
+        sa.PrimaryKeyConstraint("id"),
+    )
+    op.create_index(op.f("ix_qc_file_id"), "qc_file", ["id"], unique=False)
+    op.create_table(
         "reaction_participant",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("reaction_id", sa.Integer(), nullable=False),
@@ -749,6 +749,8 @@ def downgrade() -> None:
     op.drop_table("species_authors")
     op.drop_index(op.f("ix_reaction_participant_id"), table_name="reaction_participant")
     op.drop_table("reaction_participant")
+    op.drop_index(op.f("ix_qc_file_id"), table_name="qc_file")
+    op.drop_table("qc_file")
     op.drop_table("species")
     op.drop_table("np_species_reviewers")
     op.drop_table("np_species_authors")
