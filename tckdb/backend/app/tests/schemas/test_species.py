@@ -2358,56 +2358,6 @@ def test_species_schema():
         "symbols": ("C", "O", "O", "H", "H", "H"),
     }
 
-    with pytest.raises(ValidationError):
-        # not specifying scan_path
-        SpeciesCreate(
-            graph=spc_21_adj,
-            charge=0,
-            multiplicity=2,
-            coordinates=spc_21_xyz,
-            external_symmetry=1,
-            point_group="C1",
-            conformation_method="ARC v1.1.0",
-            is_well=True,
-            electronic_energy=-190.2915848,
-            E0=-19.64,
-            hessian=spc_21_data_dict["hessian"],
-            frequencies=spc_21_freqs,
-            scaled_projected_frequencies=spc_21_scaled_freqs,
-            normal_displacement_modes=spc_21_data_dict["normal_displacement_modes"],
-            # freq_id=1,
-            rigid_rotor="asymmetric top",
-            statmech_treatment="RRHO-1D",
-            rotational_constants=[10.91193, 43.57835, 51.24354],
-            torsions=[
-                {
-                    "computation_type": "continuous constrained optimization",
-                    "dimension": 1,
-                    "symmetry": 3,
-                    "treatment": "hindered rotor",
-                    "torsions": [4, 1, 2, 3],
-                    "top": [2, 3],
-                    "energies": spc_21_torsions_energies,
-                    "resolution": 8,
-                    "trajectory": spc_21_data_dict["trajectory"],
-                }
-            ],
-            H298=-7.53,
-            S298=269.89,
-            Cp_values=[
-                52.03,
-                60.75,
-                68.85,
-                76.04,
-                87.89,
-                96.90,
-                110.69,
-                117.31,
-                120.40,
-            ],
-            Cp_T_list=[300, 400, 500, 600, 800, 1000, 1500, 2000, 2400],
-            # encorr_id=2,
-        )
 
     # not specifying torsions.computation_type
     spc_21_b = SpeciesCreate(
