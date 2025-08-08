@@ -31,6 +31,6 @@ class QCFile(Base, AuditMixin):
 
     species = relationship("Species", back_populates="qc_files")
     transition_state = relationship("TransitionState", back_populates="qc_files")
-    np_species = relationship("NPSpecies", back_populates="qc_files")
+    np_species = relationship("NonPhysicalSpecies", back_populates="qc_files")
     level = relationship("Level")
     ess = relationship("ESS")

@@ -893,7 +893,7 @@ class SpeciesBase(BaseModel):
             if "label" in values.data and values.data["label"] is not None
             else ""
         )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
+        if not values.data.get("is_ts", False) and value is None:
             raise ValueError(
                 f'The "H298" argument must be given for non-TS species{label}.'
             )
@@ -908,7 +908,7 @@ class SpeciesBase(BaseModel):
             if "label" in values.data and values.data["label"] is not None
             else ""
         )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
+        if not values.data.get("is_ts", False) and value is None:
             raise ValueError(
                 f'The "S298" argument must be given for non-TS species{label}.'
             )
@@ -923,7 +923,7 @@ class SpeciesBase(BaseModel):
             if "label" in values.data and values.data["label"] is not None
             else ""
         )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
+        if not values.data.get("is_ts", False) and value is None:
             raise ValueError(
                 f'The "Cp_values" argument must be given for non-TS species{label}.'
             )
@@ -938,7 +938,7 @@ class SpeciesBase(BaseModel):
             if "label" in values.data and values.data["label"] is not None
             else ""
         )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
+        if not values.data.get("is_ts", False) and value is None:
             raise ValueError(
                 f'The "Cp_T_list" argument must be given for non-TS species{label}.'
             )
