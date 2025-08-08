@@ -153,31 +153,6 @@ class NonPhysicalSpeciesBase(BaseModel):
         ]
     ] = Field(None, title="IRC trajectories (for TS species)")
 
-    # Paths
-    # Storage requires consideration
-    opt_path: Optional[str] = Field(None, title="The path to the opt output file")
-    freq_path: Optional[str] = Field(None, title="The path to the freq output file")
-    scan_paths: Optional[
-        Dict[
-            Tuple[
-                Tuple[
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                ],
-                ...,
-            ],
-            Annotated[str, StringConstraints(max_length=5000)],
-        ]
-    ] = Field(None, title="Paths to scan log files")
-    irc_paths: Optional[List[Annotated[str, StringConstraints(max_length=5000)]]] = (
-        Field(None, title="Paths to IRC log files")
-    )
-    sp_path: Optional[str] = Field(
-        None, max_length=5000, title="Path to single-point energy log file"
-    )
-
     extras: Optional[Dict[str, Any]] = Field(None, title="Extras")
     model_config = ConfigDict(from_attributes=True, extra="forbid")
 
@@ -561,53 +536,6 @@ class NonPhysicalSpeciesBase(BaseModel):
                         )
         return value
 
-    @field_validator("opt_path", mode="before")
-    @classmethod
-    def opt_path_validator(cls, value, values: ValidationInfo):
-        """NonPhysicalSpecies.opt_path validator"""
-        label = (
-            f' for non-physical-species "{values["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The opt_path was not given{label}.")
-        return value
-
-    @field_validator("freq_path", mode="before")
-    @classmethod
-    def freq_path_validator(cls, value, values: ValidationInfo):
-        """NonPhysicalSpecies.freq_path validator"""
-        label = (
-            f' for non-physical-species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The freq_path was not given{label}.")
-        return value
-
-    @field_validator("irc_paths", mode="before")
-    @classmethod
-    def irc_paths_validator(cls, value, values: ValidationInfo):
-        """NonPhysicalSpecies.irc_paths validator"""
-        label = (
-            f' for non-physical-species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if (
-            "irc_trajectories" in values.data
-            and values.data["irc_trajectories"]
-            and value is None
-        ):
-            raise ValueError(f"The irc_paths argument was not given{label}.")
-        if value is not None and len(value) not in [1, 2]:
-            raise ValueError(
-                "The length of the IRC paths argument must be either 1 (for a forward+reverse IRC) or 2. "
-                f"Got: {len(value)}{label}."
-            )
-        return value
 
 
 class NonPhysicalSpeciesCreate(NonPhysicalSpeciesBase):

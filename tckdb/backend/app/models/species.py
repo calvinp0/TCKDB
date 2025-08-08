@@ -652,12 +652,8 @@ class Species(Base, AuditMixin):
         "Person", secondary=species_reviewers, backref="reviewers_species"
     )
 
-    # paths
-    opt_path = Column(String(5000), nullable=True)
-    freq_path = Column(String(5000), nullable=True)
-    scan_paths = Column(MsgpackExt, nullable=True)
-    irc_paths = Column(MsgpackExt, nullable=True)
-    sp_path = Column(String(5000), nullable=False)
+    # relationships to QC files
+    qc_files = relationship("QCFile", back_populates="species")
 
     # unconverged jobs
     unconverged_jobs = Column(MsgpackExt, nullable=True)

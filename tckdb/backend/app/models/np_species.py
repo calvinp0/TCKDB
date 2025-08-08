@@ -350,12 +350,8 @@ class NonPhysicalSpecies(Base, AuditMixin):
         "Person", secondary=np_species_reviewers, backref="reviewers_np_species"
     )
 
-    # paths
-    opt_path = Column(String(5000), nullable=True)
-    freq_path = Column(String(5000), nullable=True)
-    scan_paths = Column(MsgpackExt, nullable=True)
-    irc_paths = Column(MsgpackExt, nullable=True)
-    sp_path = Column(String(5000), nullable=False)
+    # relationship to QC files
+    qc_files = relationship("QCFile", back_populates="np_species")
 
     # unconverged jobs
     unconverged_jobs = Column(MsgpackExt, nullable=True)

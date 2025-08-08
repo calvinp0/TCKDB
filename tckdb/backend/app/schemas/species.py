@@ -192,38 +192,6 @@ class SpeciesBase(BaseModel):
         Dict[str, Union[float, Dict[str, Union[float, List[float]]], str]]
     ] = Field(None, title="Heat capacity model")
 
-    # Paths
-    # Storage requires consideration
-    opt_path: Optional[str] = Field(
-        None, title="The path to the opt output file", validate_default=True
-    )
-    freq_path: Optional[str] = Field(
-        None, title="The path to the freq output file", validate_default=True
-    )
-    scan_paths: Optional[
-        Dict[
-            Tuple[
-                Tuple[
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                ],
-                ...,
-            ],
-            Annotated[str, StringConstraints(max_length=5000)],
-        ]
-    ] = Field(None, title="Paths to scan log files", validate_default=True)
-    irc_paths: Optional[List[Annotated[str, StringConstraints(max_length=5000)]]] = (
-        Field(None, title="Paths to IRC log files", validate_default=True)
-    )
-    sp_path: Optional[str] = Field(
-        None,
-        max_length=5000,
-        title="Path to single-point energy log file",
-        validate_default=True,
-    )
-
     extras: Optional[Dict[str, Any]] = Field(None, title="Extras")
     model_config = ConfigDict(from_attributes=True, extra="forbid")
 
@@ -986,78 +954,6 @@ class SpeciesBase(BaseModel):
             )
         return value
 
-    @field_validator("opt_path", mode="before")
-    @classmethod
-    def opt_path_validator(cls, value, values: ValidationInfo):
-        """Species.opt_path validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if common.get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The opt_path was not given{label}.")
-        return value
-
-    @field_validator("freq_path", mode="before")
-    @classmethod
-    def freq_path_validator(cls, value, values: ValidationInfo):
-        """Species.freq_path validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if common.get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The freq_path was not given{label}.")
-        return value
-
-    @field_validator("scan_paths", mode="before")
-    @classmethod
-    def scan_paths_validator(cls, value, values: ValidationInfo):
-        """Species.scan_paths validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "torsions" in values.data and values.data["torsions"]:
-            if value is None:
-                raise ValueError(f"The scan_paths was not given{label}.")
-            else:
-                for torsion in values.data["torsions"]:
-                    torsion_indices = tuple(
-                        tuple(indices) for indices in torsion.torsions
-                    )
-                    match = False
-                    for path_key in value.keys():
-                        if path_key == torsion_indices:
-                            match = True
-                            break
-                    if not match:
-                        raise ValueError(
-                            f"Could not find a corresponding scan path "
-                            f"for the torsion {torsion_indices}{label}."
-                        )
-        return value
-
-    @field_validator("irc_paths", mode="before")
-    @classmethod
-    def irc_paths_validator(cls, value, values: ValidationInfo):
-        """Species.irc_paths validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and values.data["is_ts"] and value is None:
-            raise ValueError(f"The irc_paths argument was not given{label}.")
-        if value is not None and len(value) not in [1, 2]:
-            raise ValueError(
-                f"The length of the IRC paths argument must be either 1 (for a forward+reverse IRC) or 2. "
-                f"Got: {len(value)}{label}."
-            )
-        return value
 
 
 class SpeciesCreate(SpeciesBase):
@@ -1073,9 +969,6 @@ class SpeciesCreate(SpeciesBase):
     E0: float = Field(..., title="E0 (zero-point energy) in kJ/mol")
     is_well: bool = Field(..., title="Is this species a well on the PES?")
 
-    sp_path: str = Field(
-        ..., max_length=5000, title="Path to single-point energy log file"
-    )
     model_config = ConfigDict(from_attributes=True, extra="forbid")
 
     # @model_validator

@@ -24,6 +24,7 @@ from tckdb.backend.app.models.reaction import (
 from tckdb.backend.app.models.transition_state import TransitionState
 from tckdb.backend.app.models.person import Person
 from tckdb.backend.app.models.trans import Trans
+from tckdb.backend.app.models.qc_file import QCFile
 
 
 __all__ = [
@@ -45,4 +46,5 @@ __all__ = [
     "TransitionState",
     "Person",
     "Trans",
+    "QCFile",
 ]
