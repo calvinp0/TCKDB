@@ -20,15 +20,12 @@ config = context.config
 # Interpret the config file for Python logging.
 fileConfig(config.config_file_name)
 
-# Set the SQLAlchemy URL from an environment variable. This avoids
-# storing credentials in the alembic.ini file and makes the connection
-# configurable at runtime.
+# Optionally override the SQLAlchemy URL from an environment variable.
+# If the environment variable is not set, Alembic will use the URL
+# provided in the configuration object (e.g., by tests).
 database_url = os.getenv("SQLALCHEMY_DATABASE_URI")
-if not database_url:
-    raise EnvironmentError(
-        "The SQLALCHEMY_DATABASE_URI environment variable is not set."
-    )
-config.set_main_option("sqlalchemy.url", database_url)
+if database_url:
+    config.set_main_option("sqlalchemy.url", database_url)
 
 # Set target_metadata to your models' metadata
 target_metadata = Base.metadata
