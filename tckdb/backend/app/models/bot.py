@@ -1,4 +1,4 @@
-b"""
+"""
 TCKDB backend app models bot module
 """
 
