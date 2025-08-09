@@ -2,7 +2,6 @@
 
 import gzip
 import hashlib
-from typing import Optional
 
 
 def compress_bytes(data: bytes) -> bytes:

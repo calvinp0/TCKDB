@@ -2358,7 +2358,6 @@ def test_species_schema():
         "symbols": ("C", "O", "O", "H", "H", "H"),
     }
 
-
     # not specifying torsions.computation_type
     spc_21_b = SpeciesCreate(
         graph=spc_21_adj,

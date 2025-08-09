@@ -14,7 +14,9 @@ class QCFile(Base, AuditMixin):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
 
     species_id = Column(Integer, ForeignKey("species.id"), nullable=True)
-    transition_state_id = Column(Integer, ForeignKey("transition_state.id"), nullable=True)
+    transition_state_id = Column(
+        Integer, ForeignKey("transition_state.id"), nullable=True
+    )
     np_species_id = Column(Integer, ForeignKey("nonphysicalspecies.id"), nullable=True)
 
     calc_type = Column(String(20), nullable=False)

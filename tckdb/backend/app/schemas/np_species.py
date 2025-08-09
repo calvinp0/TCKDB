@@ -537,7 +537,6 @@ class NonPhysicalSpeciesBase(BaseModel):
         return value
 
 
-
 class NonPhysicalSpeciesCreate(NonPhysicalSpeciesBase):
     """
     A NonPhysicalSpeciesCreate class (to be used to create non-physical species)
