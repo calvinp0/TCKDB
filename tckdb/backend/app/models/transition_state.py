@@ -36,9 +36,7 @@ class TransitionState(Base, AuditMixin):
     sp_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=False)
     sp_ess = relationship("ESS", backref="ts_sp", foreign_keys=[sp_ess_id])
 
-    opt_path = Column(String(5000), nullable=True)
-    freq_path = Column(String(5000), nullable=True)
-    sp_path = Column(String(5000), nullable=False)
+    qc_files = relationship("QCFile", back_populates="transition_state")
 
     authors = relationship(
         "Person",

@@ -260,9 +260,6 @@ class TestBatchEndpoint:
                         "sp": "temp_ess_irc_sp_scan",
                         "freq": "temp_ess_opt_freq",
                     },
-                    "opt_path": "path/to/log",
-                    "freq_path": "path/to/log",
-                    "sp_path": "path/to/log",
                 }
             ],
         }

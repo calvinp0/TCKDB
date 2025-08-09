@@ -220,22 +220,6 @@ class NonPhysicalSpecies(Base, AuditMixin):
             An attribute that establishes a bidirectional relationship in a Many to Many data model
             with the :ref:`Person table <person_model>` representing reviewers of this object.
 
-        # paths
-        opt_path (Optional[str])
-            The path to the optimization output file. Required for polyatomic species (with 2 or more atoms).
-        freq_path (Optional[str])
-            The path to the frequencies calculation output file. Required for polyatomic species (with 2 or more atoms).
-        scan_paths (Optional[Dict[Tuple[Tuple[int, int, int, int], ...], str]])
-            Paths to the torsion scan calculation output files.
-            Keys are tuples of tuples. The number of inner-level tuples corresponds to the torsion dimension. Entries of
-            the inner-level tuple are torsion atom indices. Values are paths to the respective scan calculation log file.
-        irc_paths (Optional[List[str]])
-            Entries are paths to the IRC calculation output files. Required for transition states.
-            Either a single path to a forward+reverse IRC, or two respective paths.
-        sp_path (Optional[str])
-            The path to the single point energy output file.
-            Unlike the ``Species`` object, here ``sp_path`` is optional.
-
         # unconverged jobs
         unconverged_jobs (Optional[List[Dict[str, str]]])
             Any relevant unconverged jobs that were troubleshooted while calculating this Species.
@@ -350,12 +334,8 @@ class NonPhysicalSpecies(Base, AuditMixin):
         "Person", secondary=np_species_reviewers, backref="reviewers_np_species"
     )
 
-    # paths
-    opt_path = Column(String(5000), nullable=True)
-    freq_path = Column(String(5000), nullable=True)
-    scan_paths = Column(MsgpackExt, nullable=True)
-    irc_paths = Column(MsgpackExt, nullable=True)
-    sp_path = Column(String(5000), nullable=False)
+    # relationship to QC files
+    qc_files = relationship("QCFile", back_populates="np_species")
 
     # unconverged jobs
     unconverged_jobs = Column(MsgpackExt, nullable=True)

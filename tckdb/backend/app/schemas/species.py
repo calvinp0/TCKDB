@@ -192,38 +192,6 @@ class SpeciesBase(BaseModel):
         Dict[str, Union[float, Dict[str, Union[float, List[float]]], str]]
     ] = Field(None, title="Heat capacity model")
 
-    # Paths
-    # Storage requires consideration
-    opt_path: Optional[str] = Field(
-        None, title="The path to the opt output file", validate_default=True
-    )
-    freq_path: Optional[str] = Field(
-        None, title="The path to the freq output file", validate_default=True
-    )
-    scan_paths: Optional[
-        Dict[
-            Tuple[
-                Tuple[
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                    Annotated[int, Field(ge=1)],
-                ],
-                ...,
-            ],
-            Annotated[str, StringConstraints(max_length=5000)],
-        ]
-    ] = Field(None, title="Paths to scan log files", validate_default=True)
-    irc_paths: Optional[List[Annotated[str, StringConstraints(max_length=5000)]]] = (
-        Field(None, title="Paths to IRC log files", validate_default=True)
-    )
-    sp_path: Optional[str] = Field(
-        None,
-        max_length=5000,
-        title="Path to single-point energy log file",
-        validate_default=True,
-    )
-
     extras: Optional[Dict[str, Any]] = Field(None, title="Extras")
     model_config = ConfigDict(from_attributes=True, extra="forbid")
 
@@ -779,7 +747,9 @@ class SpeciesBase(BaseModel):
                     f"The RMG adjacency list{label} is invalid:\n{value}\nReason:\n{err}"
                 )
             multiplicity = converter.multiplicity_from_adjlist(value)
-            if multiplicity != values.data.get("multiplicity"):
+            if multiplicity is not None and multiplicity != values.data.get(
+                "multiplicity"
+            ):
                 if not (
                     abs(values.data.get("multiplicity") - multiplicity) % 2
                     + abs(values.data.get("charge", 0))
@@ -841,26 +811,26 @@ class SpeciesBase(BaseModel):
             )
         return value
 
-    @field_validator("rotational_constants", mode="before")
+    @field_validator("rotational_constants", mode="after")
     @classmethod
-    def rotational_constants_validator(cls, value, values: ValidationInfo):
+    def rotational_constants_validator(cls, value, info: ValidationInfo):
         """Species.rotational_constants validator"""
         label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
+            f' for species "{info.data["label"]}"'
+            if "label" in info.data and info.data["label"] is not None
             else ""
         )
-        if value is None and common.get_number_of_atoms(values.data) > 1:
+        num_atoms = common.get_number_of_atoms(info.data.get("coordinates"))
+        if value is None and num_atoms > 1:
             raise ValueError(f"No rotational constants specified{label}.")
         if value is not None:
-            if common.get_number_of_atoms(values.data) == 1:
+            if num_atoms == 1:
                 raise ValueError(
                     f"Rotational constants were specified for a monoatomic species{label} ({value})."
                 )
-            if "coordinates" in values.data and "coords" in values.data["coordinates"]:
-                linear = is_linear(
-                    coordinates=np.array(values.data["coordinates"]["coords"])
-                )
+            coords = info.data.get("coordinates")
+            if coords and "coords" in coords:
+                linear = is_linear(coordinates=np.array(coords["coords"]))
                 if len(value) != 1 and linear:
                     raise ValueError(
                         f"More than one rotational constant was specified for a linear species{label} "
@@ -916,148 +886,33 @@ class SpeciesBase(BaseModel):
                 )
         return value
 
-    @field_validator("H298", mode="before")
-    @classmethod
-    def h298_validator(cls, value, values: ValidationInfo):
-        """Species.H298 validator"""
-        label = (
-            f' "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
-            raise ValueError(
-                f'The "H298" argument must be given for non-TS species{label}.'
-            )
-        return value
-
-    @field_validator("S298", mode="before")
-    @classmethod
-    def s298_validator(cls, value, values: ValidationInfo):
-        """Species.S298 validator"""
-        label = (
-            f' "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
-            raise ValueError(
-                f'The "S298" argument must be given for non-TS species{label}.'
-            )
-        return value
-
-    @field_validator("Cp_values", mode="before")
-    @classmethod
-    def cp_values_validator(cls, value, values: ValidationInfo):
-        """Species.Cp_values validator"""
-        label = (
-            f' "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
-            raise ValueError(
-                f'The "Cp_values" argument must be given for non-TS species{label}.'
-            )
-        return value
-
-    @field_validator("Cp_T_list", mode="before")
-    @classmethod
-    def cp_t_list_validator(cls, value, values: ValidationInfo):
-        """Species.Cp_T_list validator"""
-        label = (
-            f' "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and not values.data["is_ts"] and value is None:
-            raise ValueError(
-                f'The "Cp_T_list" argument must be given for non-TS species{label}.'
-            )
-        if (
-            "Cp_values" in values.data
-            and values.data["Cp_values"]
-            and value is not None
-            and len(values.data["Cp_values"]) != len(value)
-        ):
-            raise ValueError(
-                f"The number of Cp values ({len(values.data['Cp_values'])}) "
-                f"must be equal to the number of Cp temperatures ({len(value)})."
-            )
-        return value
-
-    @field_validator("opt_path", mode="before")
-    @classmethod
-    def opt_path_validator(cls, value, values: ValidationInfo):
-        """Species.opt_path validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if common.get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The opt_path was not given{label}.")
-        return value
-
-    @field_validator("freq_path", mode="before")
-    @classmethod
-    def freq_path_validator(cls, value, values: ValidationInfo):
-        """Species.freq_path validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if common.get_number_of_atoms(values.data) > 1 and value is None:
-            raise ValueError(f"The freq_path was not given{label}.")
-        return value
-
-    @field_validator("scan_paths", mode="before")
-    @classmethod
-    def scan_paths_validator(cls, value, values: ValidationInfo):
-        """Species.scan_paths validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "torsions" in values.data and values.data["torsions"]:
-            if value is None:
-                raise ValueError(f"The scan_paths was not given{label}.")
-            else:
-                for torsion in values.data["torsions"]:
-                    torsion_indices = tuple(
-                        tuple(indices) for indices in torsion.torsions
-                    )
-                    match = False
-                    for path_key in value.keys():
-                        if path_key == torsion_indices:
-                            match = True
-                            break
-                    if not match:
-                        raise ValueError(
-                            f"Could not find a corresponding scan path "
-                            f"for the torsion {torsion_indices}{label}."
-                        )
-        return value
-
-    @field_validator("irc_paths", mode="before")
-    @classmethod
-    def irc_paths_validator(cls, value, values: ValidationInfo):
-        """Species.irc_paths validator"""
-        label = (
-            f' for species "{values.data["label"]}"'
-            if "label" in values.data and values.data["label"] is not None
-            else ""
-        )
-        if "is_ts" in values.data and values.data["is_ts"] and value is None:
-            raise ValueError(f"The irc_paths argument was not given{label}.")
-        if value is not None and len(value) not in [1, 2]:
-            raise ValueError(
-                f"The length of the IRC paths argument must be either 1 (for a forward+reverse IRC) or 2. "
-                f"Got: {len(value)}{label}."
-            )
-        return value
+    @model_validator(mode="after")
+    def thermo_validator(cls, data):
+        """Ensure thermodynamic data are provided for non-TS species and are consistent."""
+        label = f' "{data.label}"' if data.label else ""
+        if not data.is_ts:
+            if data.H298 is None:
+                raise ValueError(
+                    f'The "H298" argument must be given for non-TS species{label}.'
+                )
+            if data.S298 is None:
+                raise ValueError(
+                    f'The "S298" argument must be given for non-TS species{label}.'
+                )
+            if data.Cp_values is None:
+                raise ValueError(
+                    f'The "Cp_values" argument must be given for non-TS species{label}.'
+                )
+            if data.Cp_T_list is None:
+                raise ValueError(
+                    f'The "Cp_T_list" argument must be given for non-TS species{label}.'
+                )
+            if len(data.Cp_values) != len(data.Cp_T_list):
+                raise ValueError(
+                    f"The number of Cp values ({len(data.Cp_values)}) must be equal to the number "
+                    f"of Cp temperatures ({len(data.Cp_T_list)})."
+                )
+        return data
 
 
 class SpeciesCreate(SpeciesBase):
@@ -1073,9 +928,6 @@ class SpeciesCreate(SpeciesBase):
     E0: float = Field(..., title="E0 (zero-point energy) in kJ/mol")
     is_well: bool = Field(..., title="Is this species a well on the PES?")
 
-    sp_path: str = Field(
-        ..., max_length=5000, title="Path to single-point energy log file"
-    )
     model_config = ConfigDict(from_attributes=True, extra="forbid")
 
     # @model_validator
