@@ -22,20 +22,6 @@ class TransitionState(Base, AuditMixin):
     multiplicity = Column(Integer, nullable=False)
     coordinates = Column(MsgpackExt, nullable=False)
 
-    opt_level_id = Column(Integer, ForeignKey("level.id"), nullable=True)
-    opt_level = relationship("Level", backref="ts_opt", foreign_keys=[opt_level_id])
-    freq_level_id = Column(Integer, ForeignKey("level.id"), nullable=True)
-    freq_level = relationship("Level", backref="ts_freq", foreign_keys=[freq_level_id])
-    sp_level_id = Column(Integer, ForeignKey("level.id"), nullable=False)
-    sp_level = relationship("Level", backref="ts_sp", foreign_keys=[sp_level_id])
-
-    opt_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True)
-    opt_ess = relationship("ESS", backref="ts_opt", foreign_keys=[opt_ess_id])
-    freq_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True)
-    freq_ess = relationship("ESS", backref="ts_freq", foreign_keys=[freq_ess_id])
-    sp_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=False)
-    sp_ess = relationship("ESS", backref="ts_sp", foreign_keys=[sp_ess_id])
-
     qc_files = relationship("QCFile", back_populates="transition_state")
 
     authors = relationship(

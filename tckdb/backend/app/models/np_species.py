@@ -170,48 +170,6 @@ class NonPhysicalSpecies(Base, AuditMixin):
             with the :ref:`Bot table <bot_model>`,
             where the "reverse" side is a Many to One data model.
 
-        opt_level (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`Level table <level_model>`,
-            where the "reverse" side is a Many to One data model.
-        freq_level (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`Level table <level_model>`,
-            where the "reverse" side is a Many to One data model.
-        scan_level (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`Level table <level_model>`,
-            where the "reverse" side is a Many to One data model.
-        irc_level (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`Level table <level_model>`,
-            where the "reverse" side is a Many to One data model.
-        sp_level (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`Level table <level_model>`,
-            where the "reverse" side is a Many to One data model. Required.
-
-        opt_ess (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`ESS table <ess_model>`,
-            where the "reverse" side is a Many to One data model.
-        freq_ess (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`ESS table <ess_model>`,
-            where the "reverse" side is a Many to One data model.
-        scan_ess (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`ESS table <ess_model>`,
-            where the "reverse" side is a Many to One data model.
-        irc_ess (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`ESS table <ess_model>`,
-            where the "reverse" side is a Many to One data model.
-        sp_ess (Optional[relationship])
-            An attribute that establishes a bidirectional relationship in a One to Many data model
-            with the :ref:`ESS table <ess_model>`,
-            where the "reverse" side is a Many to One data model. Required.
-
         # relationships - Many to Many
         authors (relationship)
             An attribute that establishes a bidirectional relationship in a Many to Many data model
@@ -289,42 +247,6 @@ class NonPhysicalSpecies(Base, AuditMixin):
     bot = relationship(
         "Bot", back_populates="non_physical_species", foreign_keys=[bot_id]
     )
-
-    opt_level_id = Column(Integer, ForeignKey("level.id"), nullable=True, unique=False)
-    opt_level = relationship(
-        "Level", backref="np_species_opt", foreign_keys=[opt_level_id]
-    )
-    freq_level_id = Column(Integer, ForeignKey("level.id"), nullable=True, unique=False)
-    freq_level = relationship(
-        "Level", backref="np_species_freq", foreign_keys=[freq_level_id]
-    )
-    scan_level_id = Column(Integer, ForeignKey("level.id"), nullable=True, unique=False)
-    scan_level = relationship(
-        "Level", backref="np_species_scan", foreign_keys=[scan_level_id]
-    )
-    irc_level_id = Column(Integer, ForeignKey("level.id"), nullable=True, unique=False)
-    irc_level = relationship(
-        "Level", backref="np_species_irc", foreign_keys=[irc_level_id]
-    )
-    sp_level_id = Column(Integer, ForeignKey("level.id"), nullable=False, unique=False)
-    sp_level = relationship(
-        "Level", backref="np_species_sp", foreign_keys=[sp_level_id]
-    )
-
-    opt_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True, unique=False)
-    opt_ess = relationship("ESS", backref="np_species_opt", foreign_keys=[opt_ess_id])
-    freq_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True, unique=False)
-    freq_ess = relationship(
-        "ESS", backref="np_species_freq", foreign_keys=[freq_ess_id]
-    )
-    scan_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True, unique=False)
-    scan_ess = relationship(
-        "ESS", backref="np_species_scan", foreign_keys=[scan_ess_id]
-    )
-    irc_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True, unique=False)
-    irc_ess = relationship("ESS", backref="np_species_irc", foreign_keys=[irc_ess_id])
-    sp_ess_id = Column(Integer, ForeignKey("ess.id"), nullable=False, unique=False)
-    sp_ess = relationship("ESS", backref="np_species_sp", foreign_keys=[sp_ess_id])
 
     # relationships - Many to Many
     authors = relationship(
