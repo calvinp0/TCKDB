@@ -747,9 +747,8 @@ class SpeciesBase(BaseModel):
                     f"The RMG adjacency list{label} is invalid:\n{value}\nReason:\n{err}"
                 )
             multiplicity = converter.multiplicity_from_adjlist(value)
-            if (
-                multiplicity is not None
-                and multiplicity != values.data.get("multiplicity")
+            if multiplicity is not None and multiplicity != values.data.get(
+                "multiplicity"
             ):
                 if not (
                     abs(values.data.get("multiplicity") - multiplicity) % 2
@@ -914,7 +913,6 @@ class SpeciesBase(BaseModel):
                     f"of Cp temperatures ({len(data.Cp_T_list)})."
                 )
         return data
-
 
 
 class SpeciesCreate(SpeciesBase):

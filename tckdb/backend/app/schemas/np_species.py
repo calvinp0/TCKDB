@@ -15,7 +15,6 @@ from typing_extensions import Annotated
 import tckdb.backend.app.conversions.converter as converter
 from tckdb.backend.app.schemas.common import (
     Coordinates,
-    get_number_of_atoms,
     is_valid_adjlist,
     is_valid_atom_index,
     is_valid_coordinates,
