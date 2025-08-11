@@ -53,42 +53,47 @@ class ReactionParticipant(Base):
     role = Column(String(50), nullable=False)
     species_id = Column(Integer, ForeignKey("species.id"), nullable=True)
     ts_id = Column(Integer, ForeignKey("transition_state.id"), nullable=True)
-    vdw_id = Column(Integer, ForeignKey("vdw.id"), nullable=True)
+    vdw_entry_id = Column(Integer, ForeignKey("vdw_entry.id"), nullable=True)
 
     reaction = relationship("Reaction", back_populates="participants")
     species = relationship("Species")
     transition_state = relationship("TransitionState")
-    vdw = relationship("VDW")
+    vdw_entry = relationship("VDWEntry")
 
 
 class ReactionEntry(Base, AuditMixin):
-    """A class representing a computed entry for a reaction"""
-
     __tablename__ = "reaction_entry"
 
     id = Column(Integer, primary_key=True, index=True, nullable=False)
     reaction_id = Column(Integer, ForeignKey("reaction.id"), nullable=False)
+
+    # kinetics & metadata
     kinetics = Column(MsgpackExt, nullable=True)
     kinetics_fit = Column(MsgpackExt, nullable=True)
     fit_error = Column(MsgpackExt, nullable=True)
     atom_mapping = Column(MsgpackExt, nullable=True)
     uncertainties = Column(MsgpackExt, nullable=True)
+
+    # NEW: min energy path & flux files
+    min_e_path = Column(MsgpackExt, nullable=True)  # list of {xyz, energy}
+    flux_files = Column(MsgpackExt, nullable=True)  # list/dict of file metadata
+
     ess_id = Column(Integer, ForeignKey("ess.id"), nullable=True)
     literature_id = Column(Integer, ForeignKey("literature.id"), nullable=True)
 
     reaction = relationship("Reaction", back_populates="entries")
     ess = relationship("ESS")
     literature = relationship("Literature")
+
+    # NEW: wells at the entry level
+    wells = relationship("ReactionEntryWell", cascade="all, delete-orphan", back_populates="reaction_entry")
+
     authors = relationship(
         "Person", secondary=reaction_entry_authors, backref="authors_reaction_entries"
     )
     reviewers = relationship(
-        "Person",
-        secondary=reaction_entry_reviewers,
-        backref="reviewers_reaction_entries",
+        "Person", secondary=reaction_entry_reviewers, backref="reviewers_reaction_entries"
     )
 
-    def __repr__(self) -> str:  # pragma: no cover - simple representation
-        return (
-            f"<{self.__class__.__name__}(id={self.id}, reaction_id={self.reaction_id})>"
-        )
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__}(id={self.id}, reaction_id={self.reaction_id})>"

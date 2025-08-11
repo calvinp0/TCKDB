@@ -2,6 +2,7 @@
 TCKDB backend app models non-physical species (np_species) module
 """
 
+import sqlalchemy as sa
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, func
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
@@ -201,6 +202,9 @@ class NonPhysicalSpecies(Base, AuditMixin):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
 
     label = Column(String(255), nullable=True)
+
+    # np or not
+    is_non_physical = Column(Boolean, nullable=False, server_default=sa.text("true"))
 
     # provenance
     timestamp = Column(

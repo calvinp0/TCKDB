@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Table
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
 from tckdb.backend.app.db.base_class import Base
@@ -6,13 +6,28 @@ from tckdb.backend.app.models.common import MsgpackExt
 from sqlalchemy.sql import func
 
 
+reaction_vdwentry = Table(
+    "reaction_vdwentry",
+    Base.metadata,
+    Column(
+        "reaction_id",
+        Integer,
+        ForeignKey("reaction.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    Column(
+        "vdwentry_id",
+        Integer,
+        ForeignKey("vdw_entry.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+)
+
+
 class VDW(Base):
     __tablename__ = "vdw"
 
     id = Column(Integer, primary_key=True, index=True, nullable=False)
-    tckdb_vdw_uid = Column(
-        String(64), nullable=False, unique=True
-    )  # Unique VDW identifier
 
     # Chemical identifiers block
     inchi_augmented_list = Column(
@@ -34,11 +49,6 @@ class VDW(Base):
         "VDWEntry", back_populates="vdw", cascade="all, delete-orphan"
     )
 
-    # Optional: link wells to reactions (many-to-many)
-    reactions = relationship(
-        "Reaction", secondary="reaction_vdw", back_populates="vdw_wells"
-    )
-
 
 class VDWEntry(Base):
     __tablename__ = "vdw_entry"
@@ -54,7 +64,8 @@ class VDWEntry(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     software_note = Column(String(255), nullable=True)  # “ARC x.y”, “Script v1.2”, etc.
-    citation = Column(String(500), nullable=True)
+    literature_id = Column(Integer, ForeignKey("literature.id"), nullable=True)
+    literature = relationship("Literature")
 
     # Geometry block
     xyz = Column(MsgpackExt, nullable=True)  # ordered atoms geometry
@@ -69,8 +80,11 @@ class VDWEntry(Base):
     # Modes (same structure as SpeciesEntry)
     modes = Column(MsgpackExt, nullable=True)
 
+    lj_id = Column(Integer, ForeignKey("lj.id"), nullable=True)
+    lj = relationship("LJ")
+
     # Authors / Reviewers (reuse Person tables like Species/TS)
-    authors = relationship(
+    persons = relationship(
         "Person", secondary="vdwentry_authors", backref="authors_vdwentries"
     )
     reviewers = relationship(
@@ -79,3 +93,7 @@ class VDWEntry(Base):
 
     # Files: handled via QCFile (see below)
     qc_files = relationship("QCFile", back_populates="vdw_entry")
+
+    reactions = relationship(
+        "Reaction", secondary=reaction_vdwentry, back_populates="vdw_entries"
+    )

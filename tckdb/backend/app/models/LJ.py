@@ -2,7 +2,8 @@
 TCKDB backend app models Lennard-Jones (LJ) module
 """
 
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, String, ForeignKey, JSONB
+from sqlalchemy.orm import relationship
 
 from tckdb.backend.app.db.base_class import Base
 from tckdb.backend.app.models.common import MsgpackExt
@@ -32,6 +33,13 @@ class LJ(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
     sigma = Column(MsgpackExt, nullable=False)
     epsilon = Column(MsgpackExt, nullable=False)
+    method = Column(String(50), nullable=True)  # e.g., "arc", "script"
+    literature_id = Column(Integer, ForeignKey("literature.id"), nullable=True)
+    literature = relationship("Literature")
+    uncertainties = Column(
+        JSONB, nullable=True
+    )  # Optional uncertainties for sigma and epsilon
+
     reviewer_flags = Column(MsgpackExt, nullable=True)
 
     def __repr__(self) -> str:
